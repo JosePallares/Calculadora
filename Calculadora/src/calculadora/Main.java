@@ -8,6 +8,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import java.awt.Color;
+import java.awt.Font;
+import static java.awt.Font.PLAIN;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class Main extends JFrame{
     
