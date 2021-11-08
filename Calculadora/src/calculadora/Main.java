@@ -3,6 +3,13 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import static java.awt.Font.PLAIN;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+
 
 
 public class Main extends JFrame {
@@ -111,33 +118,162 @@ public class Main extends JFrame {
 
 
     private void eventosNumeros() {
-
-
+    for (int i = 0; i < 10; i++){
+        int numBoton = numerosBotones[i];
+        botones[numBoton].addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Si es un nuevo número y no es 0, sustituyo el valor del display
+                if (nuevoNumero){
+                    if (!textoBotones[numBoton].equals("0")){
+                        display.setText(textoBotones[numBoton]);
+                        nuevoNumero = false; //Ya no es un nuevo número
+                    }
+                }
+                //Si no, lo añado a los dígitos que ya hubiera
+                else{
+                    display.setText(display.getText() + textoBotones[numBoton]);
+                }
+            }
+        });
     }
+}
+
+    
 
 
     private void eventoDecimal(){
+    botones[15].addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Si todavía no he añadido el punto decimal al número actual
+            if (!puntoDecimal){
+                display.setText(display.getText() + textoBotones[15]);
+                puntoDecimal = true; //Ya no puedo añadir el punto decimal en este número
+                nuevoNumero = false; //Por si empiezo el número con punto decimal (por ejemplo, .537)
+            }
+        }
+    });
 
 
     }
 
 
     private void eventosOperaciones() {
+           for (int numBoton : operacionesBotones) { //Es la versión optimizada de for (int i = 0; i < operacionesBotones.length; i++){
+        botones[numBoton].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Si no tenía ninguna operación pendiente de realizar
+                if (operacion.equals("")) {
+                    //Asocio la operación del botón a la variable
+                    operacion = textoBotones[numBoton];
+                    //Asigno a operando2 el valor del display (como double)
+                    operando2 = Double.parseDouble(display.getText());
+                    //Reseteo para poder introducir otro número y otro decimal
+                    nuevoNumero = true;
+                    puntoDecimal = false;
+                //Si tenía alguna pendiente, calculo el resultado de la anterior y luego me guardo la actual
+                } else {
+                    operando2 = resultado(); //Se almacena en operando2 para poder encadenar operaciones posteriores
+                    operacion = textoBotones[numBoton];
+                }
+                //SOUT para comprobar que estoy guardando los valores adecuados
+                System.out.println(operando2 + " " + operacion + " " + operando1);
 
+
+            }
+        });
+    }
+ 
 
     }
-
-
     private void eventoResultado() {
 
 
+    botones[0].addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Al pulsar el botón de resultado, directamente lo calculo y reseteo la calculadora,
+            //sin necesidad de almacenar el resultado para futuras operaciones
+            resultado();
+
+
+        }
+    });
+
+
+}private void eventoLimpiar() {
+
+
+    botones[13].addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Al pulsar el botón de limpiar, se resetean el display y las variables de la calculadora,
+            display.setText("0");
+            limpiar();
+        }
+    });
+}
+
+
+
+
+    
+    private double resultado(){
+
+
+    //recojo el valor del display
+    operando1 = Double.parseDouble(display.getText());
+
+
+    //Selecciono y realizo operación
+    switch (operacion){
+
+
+        case "+" :  resultado = operando2 + operando1;
+            break;
+        case "-" :  resultado = operando2 - operando1;
+            break;
+        case "*" :  resultado = operando2 * operando1;
+            break;
+        case "/" :  resultado = operando2 / operando1;
+            break;
+
+
     }
 
 
-    private void eventoLimpiar() {
+    //Formateo y muestro en el display
+    Locale localeActual = Locale.GERMAN;
+    DecimalFormatSymbols simbolos = new DecimalFormatSymbols(localeActual);
+    simbolos.setDecimalSeparator('.');
+    DecimalFormat formatoResultado = new DecimalFormat("#.######", simbolos);
+    display.setText(String.valueOf(formatoResultado.format(resultado)));
+
+
+    //Limpio variables para poder continuar
+    limpiar();
+
+
+    //Devuelvo el valor del resultado
+    return resultado;
+
+
 
 
     }
+
+
+    private void limpiar(){
+
+
+    operando1 = operando2 = 0;
+    operacion = "";
+    nuevoNumero = true;
+    puntoDecimal = false;
+}
+
 
 
     public static void main(String[] args) {
