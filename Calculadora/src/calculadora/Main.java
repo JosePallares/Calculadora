@@ -65,9 +65,9 @@ public class Main extends JFrame {
         display = new JLabel("0"); //Inicio JLabel
         display.setBounds(15, 15, 245, 60); //Posición y dimensiones
         display.setOpaque(true); //Para poder darle un color de fondo
-        display.setBackground(Color.BLACK); //Color de fondo
-        display.setForeground(Color.GREEN); //Color de fuente
-        display.setBorder(new LineBorder(Color.DARK_GRAY)); //Borde
+        display.setBackground(Color.CYAN); //Color de fondo
+        display.setForeground(Color.WHITE); //Color de fuente
+        display.setBorder(new LineBorder(Color.BLUE)); //Borde
         display.setFont(new Font("MONOSPACED", PLAIN, 24)); //Fuente
         display.setHorizontalAlignment(SwingConstants.RIGHT); //Alineamiento horizontal derecha
         add(display); //Añado el JLabel al JFrame
@@ -94,9 +94,9 @@ public class Main extends JFrame {
             botones[i].setFont(new Font("MONOSPACED",PLAIN,size)); //Fuente
             botones[i].setOpaque(true); //Para poder darle un color de fondo
             botones[i].setFocusPainted(false); //Para que no salga una recuadro azul cuando tenga el foco
-            botones[i].setBackground(Color.DARK_GRAY); //Color de fondo
+            botones[i].setBackground(Color.CYAN); //Color de fondo
             botones[i].setForeground(Color.WHITE); //Color de fuente
-            botones[i].setBorder(new LineBorder(Color.DARK_GRAY)); //Borde
+            botones[i].setBorder(new LineBorder(Color.BLUE)); //Borde
             add(botones[i]); //Añado el JButton al JFrame
         }
 
@@ -112,7 +112,7 @@ public class Main extends JFrame {
         setSize(290, 455); //Dimensiones del JFrame
         setResizable(false); //No redimensionable
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar proceso al cerrar ventana
-        getContentPane().setBackground(Color.BLACK); //Color de fondo
+        getContentPane().setBackground(Color.WHITE); //Color de fondo
         setVisible(true); //Mostrar JFrame
     }
 
